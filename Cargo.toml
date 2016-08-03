@@ -1,5 +1,5 @@
 [package]
-name = "echo_socket_server"
+name = "mio-echo-server"
 version = "0.1.0"
 authors = ["JohnLiu <johnliu55tw@gmail.com>"]
 
