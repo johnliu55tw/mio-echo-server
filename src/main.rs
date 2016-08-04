@@ -26,8 +26,8 @@ impl Connection {
         match self.state {
             ConnectionState::WaitForMessages => {
                 // Read data into buffer array
-                let mut buffer = [0u8; 512];
-                match self.socket.try_read(&mut buffer) {
+                let mut buffer = vec![];
+                match self.socket.try_read_buf(&mut buffer) {
                     Err(e) => {
                         println!("Error try reading: {}", e);
                     },
@@ -36,9 +36,8 @@ impl Connection {
                     },
                     Ok(Some(len)) => {
                         println!("Read {} bytes.",len);
-                        let vec = Vec::from(&buffer[..len]);
                         self.str_buffer.push_str(
-                            &(String::from_utf8(vec).unwrap()));
+                            &(String::from_utf8(buffer).unwrap()));
                     }
                 }
                 // Let's see if string buffer contains newline
